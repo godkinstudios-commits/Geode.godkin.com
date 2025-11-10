@@ -1,0 +1,5 @@
+{
+  "name": "Geode Mod Creator",
+  "description": "A web-based tool to quickly generate the boilerplate files for a new Geode mod for Geometry Dash. Fill in the details, and download a ready-to-compile project.",
+  "requestFramePermissions": []
+}
