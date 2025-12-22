@@ -1,0 +1,126 @@
+‎<!DOCTYPE html>
+‎<html lang="en">
+‎  <head>
+‎    <meta charset="UTF-8" />
+‎    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+‎    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+‎    <title>Geode Mod Creator</title>
+‎    <script src="https://cdn.tailwindcss.com"></script>
+‎    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+‎    <script>
+‎      tailwind.config = {
+‎        theme: {
+‎          extend: {
+‎            colors: {
+‎              'geode-dark': '#1e1e2e',
+‎              'geode-light': '#cdd6f4',
+‎              'geode-crust': '#11111b',
+‎              'geode-mantle': '#181825',
+‎              'geode-surface': '#313244',
+‎              'geode-overlay': '#6c7086',
+‎              'geode-blue': '#89b4fa',
+‎              'geode-green': '#a6e3a1',
+‎              'geode-red': '#f38ba8',
+‎              'geode-teal': '#94e2d5',
+‎            },
+‎            keyframes: {
+‎              'fade-in': {
+‎                '0%': { opacity: '0' },
+‎                '100%': { opacity: '1' },
+‎              },
+‎              'fade-out': {
+‎                '0%': { opacity: '1' },
+‎                '100%': { opacity: '0' },
+‎              },
+‎              'modal-in': {
+‎                '0%': { opacity: '0', transform: 'scale(.95) translateY(1rem)' },
+‎                '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+‎              },
+‎              'modal-out': {
+‎                '0%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+‎                '100%': { opacity: '0', transform: 'scale(.95) translateY(1rem)' },
+‎              },
+‎              'notification-slide': {
+‎                '0%': { opacity: '0', transform: 'translateY(-100%)' },
+‎                '15%, 85%': { opacity: '1', transform: 'translateY(0)' },
+‎                '100%': { opacity: '0', transform: 'translateY(-100%)' },
+‎              },
+‎              'splash-screen-fade-out': {
+‎                '0%': { opacity: '1' },
+‎                '100%': { opacity: '0' },
+‎              },
+‎              'splash-logo-fade-in': {
+‎                '0%': { opacity: '0', transform: 'scale(0.95)' },
+‎                '100%': { opacity: '1', transform: 'scale(1)' },
+‎              },
+‎            },
+‎            animation: {
+‎              'fade-in': 'fade-in 0.5s ease-out forwards',
+‎              'fade-out': 'fade-out 0.2s ease-in forwards',
+‎              'modal-in': 'modal-in 0.2s ease-out forwards',
+‎              'modal-out': 'modal-out 0.2s ease-in forwards',
+‎              'notification-slide': 'notification-slide 3s ease-in-out forwards',
+‎              'splash-screen-fade-out': 'splash-screen-fade-out 0.5s ease-in 2s forwards',
+‎              'splash-logo-fade-in': 'splash-logo-fade-in 1s ease-out forwards',
+‎            }
+‎          }
+‎        }
+‎      }
+‎    </script>
+‎  <script type="importmap">
+‎{
+‎  "imports": {
+‎    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+‎    "react": "https://aistudiocdn.com/react@^19.2.0",
+‎    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+‎    "@google/genai": "https://esm.run/@google/genai"
+‎  }
+‎}
+‎</script>
+‎<script>
+‎(async () => {
+‎  // Initialize esbuild
+‎  await esbuild.initialize({
+‎    wasmURL: "https://unpkg.com/esbuild-wasm@0.20.2/esbuild-wasm.wasm"
+‎  });
+‎
+‎  // Function to run TS or TSX
+‎  async function runTSX(code) {
+‎    const result = await esbuild.transform(code, {
+‎      loader: "tsx",        // 👈 supports TS + TSX
+‎      jsx: "automatic",
+‎      target: "es2020",
+‎      format: "esm"
+‎    });
+‎
+‎    // Execute compiled JS
+‎    const script = document.createElement("script");
+‎    script.type = "module";
+‎    script.textContent = result.code;
+‎    document.body.appendChild(script);
+‎  }
+‎
+‎  // Example TSX code
+‎  runTSX(`
+‎    const App = () => {
+‎      return <h1>TSX running in the browser 🚀</h1>;
+‎    };
+‎
+‎    document.body.append(App());
+‎  `);
+‎})();
+‎</script>
+‎<style>
+‎  html, body, #root {
+‎    height: 100%;
+‎  }
+‎  body {
+‎    overflow: hidden; /* Prevent the body from scrolling when the keyboard appears */
+‎  }
+‎</style>
+‎</head>
+‎  <body class="bg-geode-crust text-geode-light">
+‎    <div id="root"></div>
+‎    <script type="module" src="/index.tsx"></script>
+‎  </body>
+‎</html>
